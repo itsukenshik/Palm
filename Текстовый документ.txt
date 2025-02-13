@@ -1,0 +1,36 @@
+#1       |       (25)    declfnc			-> write to memory
+#2       |       (5)     Int				-> write to memory
+#3       |       (8)     adr				-> write to memory
+#4       |       (0)     null				-> stop writing (get ready for 'end')
+length (adr address) = int:					
+	#5       |       (36)    obj_address	-> operation
+	#6       |       (0)     null			
+	#7       |       (0)     null
+	#8       |       (0)     null
+	#9       |       (0)     null			-> mov eax, adr:0
+
+	#10      |       (144)   _byobj			-> 
+	#11      |       (133)   add
+	#12      |       (1)     home			-> add [adr:2], 1
+	#13      |       (0)     null
+	#14      |       (0)     null
+	#15      |       (0)     null
+	#16      |       (2)     hend			-> adr:2 = eax (right now)
+	#17      |       (0)     null
+	#18      |       (0)     null			-> add eax, 1 
+	#19      |       (0)     null			-> inc eax
+
+	#20      |       (20)    initialize_reg	-> mov eax, new int (write address when got to the end)
+	#21      |       (5)     Int
+	allocate int i = 1 + &address
+
+# 00 00 00 00
+# mov eax, 25
+# inc eax
+# mov [25], eax
+
+# byte code operations:
+# declfnc(void, int, adr)	(3)
+# adr 0						(2)
+# _byobj add 1, 2			(2)
+# initialize_reg Int		(2)

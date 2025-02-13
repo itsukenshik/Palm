@@ -1,0 +1,103 @@
+length (adr address) = int:
+	allocate int i
+	until byteadr(address + i) == 0:
+		i++
+	return i
+
+#arbit(args) = type:
+#	alloc type arbit = expr
+#	keyword expr:
+#		object++
+#	keyword object/expr
+
+ASCIINumber(int number, adr address):
+	number >= 0 then:
+		until number == 0:
+			wordadr(address) = number%10 + 0x30
+			number /= 10
+			address++  # next symbol
+
+#arbit(args):
+#	expr keyword:
+#		keyword expr:
+#			object = expr
+#			object = expr
+#			object++
+		
+
+
+# {n tabs} 		:
+# {n+1 tabs} (content)
+# {n+1 tabs} (content)
+# ...
+# {n+1 tabs} (end of content)
+# {n tabs} (continuation)
+		
+
+display_symb(int pos, byte symb, byte colour):
+	allocate adr address = 0xB8000
+	allocate word whole
+		#whole = 0xCL SY
+	whole = (colour << 8) + symb
+	wordadr(address + pos * 2) = whole
+
+
+macro screen(adr x, adr y) = wordadr(y) * WIDTH_M + wordadr(x)
+
+display_adjustable_a(adr x, adr y, adr string, byte colour):
+	allocate int i = 0
+	allocate int stringLength = length(string)
+	allocate adr address = 0xB8000 + screen(x, y) 
+	until i == stringLength:
+		byteadr(address + i*2) = colour
+		i++
+	until i == 0:
+		i--
+		byteadr(address + i*2 - 1) = byteadr(string + i)
+
+#arbit(args):
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	keyword expr:
+#		object = expr
+#		object++
+#	keyword expr:
+#		object--
+#		object = expr
+
+display_adjustable_b(adr x, adr y, adr string, byte colour):
+	allocate int i = 0
+	allocate int stringLength = length(string)
+	allocate adr address = 0xB8000 + screen(x, y) 
+	allocate word colour_formatted = colour << 8
+	until i == stringLength:
+		wordadr(address + i*2) = colour + byteadr(string + i)
+
+#arbit(args):
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	keyword expr:
+#		object = expr
+
+const byte DEF_COLOUR = 0x08
+
+macro display(adr string):
+	display_adjustable_b(x_cur, y_cur, string, DEF_COLOUR)
+
+const adr GLOBAL_BUFFER_ADDRESS = 0xJONKLER
+const word GLOBAL_BUFFER_SIZE = 128
+
+capture() = adr:
+	until 
+	return GLOBAL_BUFFER_ADDRESS 
+	
+	#allocate    adr    address   =   0xB8000   +   screen  (  x  , y  )   
+	#allocate adr address=0xB8000+screen(x,y)
+
+	#+  -  *  /  %  ,  (  )  [  ]  {  }  :  =  ==  !=  <=  >=
+	#symbols above do not essentially need spaces before and after them
+	#speaking of the rest of the objects, 

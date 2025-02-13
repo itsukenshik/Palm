@@ -1,0 +1,152 @@
+length (adr address) = int:
+	constarray byte ad = 'Hello \0world\0'
+	allocate int i = 0
+	0 then:
+		i = 0
+	until byteadr(address + i) == 0:
+		i++
+	return i
+
+
+display_symb(int pos, byte symb, byte colour):
+	allocate adr address = 0xB8000
+	allocate word whole
+	#whole = 0xCL SY
+	whole = (colour << 8) + symb
+	wordadr(address + pos * 2) = whole
+
+
+screen(adr x, adr y) = word:
+	return wordadr(y) * 80 + wordadr(x)
+
+display_adjustable_a(adr x, adr y, adr string, byte colour):
+	allocate int i = 0
+	allocate int stringLength = length(string)
+	allocate adr address = 0xB8000 + screen(x, y) 
+	until i == stringLength:
+		byteadr(address + i*2) = colour
+		i++
+	until i == 0:
+		i--
+		byteadr(address + i*2 - 1) = byteadr(string + i)
+
+#arbit(args):
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	alloc type arbit = expr
+#	keyword expr:
+#		object = expr
+#		object++
+#	keyword expr:
+#		object--
+#		object = expr
+
+display_adjustable_b(adr x, adr y, adr string, byte colour):
+	allocate int i = 0
+	allocate int stringLength = length(string)
+	allocate adr address = 0xB8000 + screen(x, y) 
+	allocate word colour_formatted = colour << 8
+	until i == stringLength:
+		wordadr(address + i*2) = colour + byteadr(string + i)
+
+
+
+home:
+	allocate adr adres = 0x500
+	allocate int a = length(0x7c00 - adres)
+
+
+#1	declfnc(int, adr)					(0)
+#2		allocate int					(1)
+#3		_2obj add 0, 1					(2) (til begins here, as above was last non-operator instruction)
+#4		byteadr_reg						(2) ^
+#5		_obj eql 2, 0				  <	(2) 
+#6		til reg							(2) ^
+#7			increment to_adr _obj 1		
+#8			increment to_obj 1
+#9		end								(jmp to 3)
+#10		retobj 1
+#11	end
+
+#0	
+
+#		1
+#1      |       (25)    declfnc
+#2      |       (5)     Int
+#3      |       (8)     adr
+#4      |       (0)     null
+#		2
+#5      |       (18)    allocate
+#6      |       (5)     Int
+#		3
+#7      |       (143)   _2obj
+#8      |       (133)   add
+#9      |       (0)     null
+#10     |       (0)     null
+#11     |       (0)     null
+#12     |       (0)     null
+#13     |       (1)     home
+#14     |       (0)     null
+#15     |       (0)     null
+#16     |       (0)     null
+#		4
+#17     |       (45)    byteadr_reg
+#		5
+#18     |       (145)   _obj
+#19     |       (125)   eql
+#20     |       (2)     hend
+#21     |       (0)     null
+#22     |       (0)     null
+#23     |       (0)     null
+#24     |       (0)     null
+#25     |       (0)     null
+#26     |       (0)     null
+#27     |       (0)     null
+#		6
+#28     |       (63)    til
+#29     |       (62)    _reg
+#		7
+#30     |       (134)   increment
+#31     |       (59)    to_adr // address must acquire a type
+#								// and now it does
+#32     |       (145)   _obj
+#33     |       (1)     home
+#34     |       (0)     null
+#35     |       (0)     null
+#36     |       (0)     null
+#		8
+#37     |       (134)   increment
+#38     |       (60)    to_obj
+#39     |       (1)     home
+#40     |       (0)     null
+#41     |       (0)     null
+#42     |       (0)     null
+#		9
+#43     |       (4)     end
+#		10
+#44     |       (31)    retobj
+#45     |       (1)     home
+#46     |       (0)     null
+#47     |       (0)     null
+#48     |       (0)     null
+#		11
+#49		|		(4)		end
+
+#43     |       (1)     home
+
+#44     |       (33)    argconst
+#45     |       (0)     null
+#46     |       (124)   z
+#47     |       (0)     null
+#48     |       (0)     null
+
+#49     |       (28)    callret
+#50     |       (3)     do_b
+#51     |       (0)     null
+#52     |       (0)     null
+#53     |       (0)     null
+
+#54     |       (20)    initialize_reg
+#55     |       (5)     Int
+
+#56     |       (4)     end

@@ -1,0 +1,16 @@
+home:
+	allocate int a
+	allocate int amnt = 0 # word of "allocate" feels way too overwhelming
+	allocate int sum = 0
+    perform:
+        a = in
+        a = 0 then:
+            break
+        amnt++
+        a%3 = 0 && a%10 = 8 then:
+            sum += a
+        while true
+
+    out(sum)
+
+
