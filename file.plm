@@ -55,6 +55,100 @@ home:
 	allocate adr adres = 0x500
 	allocate int a = length(0x7c00 - adres)
 
+#1      declfnc(Int, adr, null)
+#2              const_string
+#3              initialize_val 0 Int
+#4              If _val 0
+#5                      write to_obj 3 _val 0
+#6                      end
+#7              argument_start
+#8              _2obj add 0, 3
+#9              byteadr_reg
+#10             _obj eql 4, 0
+#11             til _reg
+#12                     increment to_obj 3
+#13                     end
+#14             retobj 3
+#15             end
+#16     declfnc(notype, Int, byte, byte, null)
+#17             initialize_val 688128 adr
+#18             allocate word
+#19             _obj shl 3, 8
+#20             _2obj add 6, 1
+#21             write to_obj 5 _reg
+#22             _obj mul 0, 2
+#23             _2obj add 4, 6
+#24             write to_adr wordadr _reg _obj 5
+#25             end
+#26     declfnc(word, adr, adr, null)
+#27             wordadr_obj 1
+#28             _obj mul 3, 80
+#29             wordadr_obj 0
+#30             _2obj add 3, 4
+#31             retreg
+#32             end
+#33     declfnc(notype, adr, adr, adr, byte, null)
+#34             initialize_val 0 Int
+#35             callret 3
+#36             argobj 3
+#37             initialize_reg Int
+#38             null
+#39             argobj 0
+#40             argobj 1
+#41             _byobj add 688128, 8
+#42             initialize_reg adr
+#43             argument_start
+#44             _2obj eql 5, 6
+#45             til _reg
+#46                     _obj mul 5, 2
+#47                     _2obj add 7, 8
+#48                     write to_adr byteadr _reg _obj 4
+#49                     increment to_obj 5
+#50                     end
+#51             argument_start
+#52             _obj eql 5, 0
+#53             til _reg
+#54                     decrement to_obj 5
+#55                     _obj mul 5, 2
+#56                     _2obj add 7, 8
+#57                     _obj sub 8, 1
+#58                     _2obj add 3, 5
+#59                     byteadr_reg
+#60                     write to_adr byteadr _obj 8 _reg
+#61                     end
+#62             end
+#63     declfnc(notype, adr, adr, adr, byte, null)
+#64             initialize_val 0 Int
+#65             callret 3
+#66             argobj 3
+#67             initialize_reg Int
+#68             null
+#69             argobj 0
+#70             argobj 1
+#71             _byobj add 688128, 8
+#72             initialize_reg adr
+#73             _obj shl 4, 8
+#74             initialize_reg word
+#75             argument_start
+#76             _2obj eql 5, 6
+#77             til _reg
+#78                     _obj mul 5, 2
+#79                     _2obj add 7, 9
+#80                     _2obj add 3, 5
+#81                     byteadr_reg
+#82                     _2obj add 4, 9
+#83                     write to_adr wordadr _obj 9 _reg
+#84                     end
+#85             end
+#86     home
+#87             initialize_val 1280 adr
+#88             callret 3
+#89             _byobj sub 31744, 0
+#90             argreg
+#91             initialize_reg Int
+#end of file
+
+
 
 #1	declfnc(int, adr)					(0)
 #2		allocate int					(1)
